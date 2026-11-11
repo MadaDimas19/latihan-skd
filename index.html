@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simulasi SKD CPNS 2026</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1b1f2a;--mu:#667;--pr:#2f5bea;--ok:#12805c;--okb:#e0f5ec;--no:#c0392b;--nob:#fde8e6;--bd:#dfe3ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:680px;margin:0 auto;padding:16px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:12px}
+h1{font-size:1.4rem;margin:.2em 0}h2{font-size:1.1rem;margin:.2em 0}
+.mu{color:var(--mu);font-size:.9rem}
+button{font:inherit;cursor:pointer}
+.b{background:var(--pr);color:#fff;border:0;border-radius:10px;padding:12px 18px;width:100%;font-weight:600}
+.b.s{background:transparent;color:var(--pr);border:1px solid var(--pr);margin-top:8px}
+.o{display:block;width:100%;text-align:left;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:8px}
+.o.sel{border-color:var(--pr);background:color-mix(in srgb,var(--pr) 12%,var(--card))}
+.bar{height:6px;background:var(--bd);border-radius:3px;overflow:hidden;margin-bottom:12px}
+.bar i{display:block;height:100%;background:var(--pr)}
+.tag{display:inline-block;font-size:.75rem;padding:2px 8px;border-radius:99px;background:var(--bd);margin-right:6px}
+.big{font-size:2.4rem;font-weight:700;color:var(--pr)}
+.r{border-left:4px solid var(--no)}.r.ok{border-left-color:var(--ok)}
+.ans{padding:6px 10px;border-radius:8px;margin-top:6px;font-size:.95rem}
+.ans.g{background:var(--okb);color:var(--ok)}.ans.x{background:var(--nob);color:var(--no)}
+.ex{margin-top:8px;font-size:.93rem;background:var(--bg);border-radius:8px;padding:8px 10px}
+:root{color-scheme:light;--pr:#4361ee;--bd:#e6e9f5}
+body{background:linear-gradient(160deg,#eaf0ff 0%,#f7f0ff 55%,#fff3ea 100%) fixed;min-height:100vh}
+.c{border:0;border-radius:20px;box-shadow:0 8px 24px rgba(67,97,238,.10);padding:18px}
+.hero{background:linear-gradient(135deg,#3a55f5,#8a4dff);color:#fff;border-radius:24px;padding:24px 20px;margin-bottom:14px;box-shadow:0 12px 28px rgba(80,70,240,.28);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.14)}
+.hero h1{font-size:1.6rem;margin:6px 0;color:#fff;position:relative}.hero p{margin:0;opacity:.92;position:relative;font-size:.95rem}
+.pill{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:99px;font-size:.78rem;font-weight:600;position:relative}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.st div{background:#f3f5ff;border-radius:14px;padding:12px 6px;text-align:center}
+.st b{display:block;font-size:1.5rem;color:var(--pr)}.st span{font-size:.75rem;color:var(--mu)}
+.cats{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.b{background:linear-gradient(135deg,#3a55f5,#7b4dff);border-radius:14px;padding:14px 18px;box-shadow:0 6px 16px rgba(67,97,238,.3);font-size:1rem}
+.b:disabled{box-shadow:none}
+.b.s{background:#fff;box-shadow:none;border:1.5px solid #cfd6fb}
+.o{border:1.5px solid var(--bd);border-radius:14px;padding:13px 14px;transition:.15s}
+.o:hover{border-color:#aab6fa;transform:translateY(-1px)}
+.o.sel{border-color:var(--pr);background:#eef1ff;box-shadow:0 0 0 3px rgba(67,97,238,.15)}
+.bar{height:8px;border-radius:4px;background:#dde3fb}.bar i{background:linear-gradient(90deg,#3a55f5,#a05bff);border-radius:4px;transition:width .3s}
+.tag{font-weight:600;padding:3px 10px;background:#e8ecff;color:#3347c9}
+.tag.TWK{background:#ffe9d6;color:#b35400}.tag.TIU{background:#dff5ea;color:#12805c}.tag.TKP{background:#f1e4ff;color:#7a2fc4}
+.big{font-size:3.4rem;line-height:1.1;background:linear-gradient(135deg,#3a55f5,#a05bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.r{border-left-width:5px}
+.ex{background:#f3f5ff}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:14px;padding:10px 14px;margin-bottom:12px;box-shadow:0 4px 14px rgba(67,97,238,.12)}
+.top b{font-size:1.3rem;font-variant-numeric:tabular-nums;color:var(--pr)}.top b.warn{color:#d33}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:#eaf0ff}
+.nv{display:flex;gap:10px;margin-top:14px}.nv .b{margin:0}.b:disabled{opacity:.45;cursor:default}
+.gr{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px;margin-bottom:12px}
+.g{border:1px solid var(--bd);background:#fff;border-radius:8px;padding:6px 0;color:var(--tx)}.g.a{background:#dbe4ff;border-color:#9db0ff}.g.cur{outline:2px solid var(--pr)}
+.ch{border:1px solid #cfd6fb;background:#fff;border-radius:99px;padding:5px 12px;margin:0 6px 10px 0;color:var(--pr)}
+.rw{margin:12px 0}.bd{display:inline-block;padding:5px 14px;border-radius:99px;font-weight:600}.bd.y{background:#e0f5ec;color:#12805c}.bd.n{background:#fde8e6;color:#c0392b}
+:root{--pr:#0f2a5c;--bd:#d9e0ea;--mu:#5b6678;--tx:#1a2233}
+body{background:#f4f6f9;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{background:#f4f6f9}
+.w{max-width:720px}
+h1,.big,.st b{font-family:Georgia,"Times New Roman",serif}
+h2{font-size:1.08rem;font-weight:600;line-height:1.5}
+.c{border:1px solid #dde3ec;border-radius:12px;box-shadow:0 1px 3px rgba(15,42,92,.07);padding:18px}
+.hero{background:#0f2a5c;border-radius:12px;border-bottom:4px solid #c9a227;box-shadow:0 2px 8px rgba(15,42,92,.18);padding:24px 20px}
+.hero:after{display:none}
+.hero h1{font-size:1.55rem;font-weight:700;letter-spacing:.2px}
+.hero p{opacity:.9}
+.pill{background:transparent;border:1px solid rgba(255,255,255,.55);border-radius:4px;text-transform:uppercase;letter-spacing:1.2px;font-size:.68rem;padding:3px 10px}
+.st div{background:#f4f6f9;border:1px solid #e3e8f0;border-radius:8px}
+.st b{color:#0f2a5c;font-size:1.6rem}
+.st span{text-transform:uppercase;letter-spacing:.8px;font-size:.68rem}
+.b{background:#0f2a5c;border-radius:8px;box-shadow:none;font-weight:600;letter-spacing:.2px}
+.b:hover:not(:disabled){background:#17397d}
+.b.s{background:#fff;color:#0f2a5c;border:1.5px solid #0f2a5c}
+.o{border:1px solid #cdd5e1;border-radius:8px;padding:12px 14px;line-height:1.45}
+.o:hover{border-color:#0f2a5c;transform:none;background:#f8fafd}
+.o.sel{background:#eaf0fa;border-color:#0f2a5c;box-shadow:0 0 0 1px #0f2a5c}
+.bar{height:6px;border-radius:3px;background:#e1e6ee}.bar i{background:#0f2a5c;border-radius:3px}
+.tag{border-radius:4px;text-transform:uppercase;letter-spacing:.8px;font-size:.7rem;background:#e8eef9;color:#0f2a5c}
+.tag.TWK{background:#e8eef9;color:#0f2a5c}.tag.TIU{background:#e4f1ec;color:#176a4d}.tag.TKP{background:#f7efdb;color:#8a6a0f}
+.top{border:1px solid #dde3ec;border-radius:10px;box-shadow:none}.top b{color:#0f2a5c;font-family:Georgia,serif}
+.g{border-radius:6px;font-size:.85rem}.g.a{background:#d9e3f5;border-color:#7d98c8;color:#0f2a5c}.g.cur{outline:2px solid #0f2a5c}
+.ch{border:1px solid #0f2a5c;border-radius:6px;color:#0f2a5c;font-size:.88rem}
+.big{background:none;-webkit-text-fill-color:initial;color:#0f2a5c;font-size:3.2rem;font-weight:700}
+.bd{border-radius:6px;text-transform:uppercase;letter-spacing:.6px;font-size:.78rem}
+.r{border-left:4px solid var(--no)}.r.ok{border-left-color:var(--ok)}
+.ans{border-radius:6px}
+.ex{background:#f4f6f9;border-left:3px solid #c9a227;border-radius:4px}
+.c>svg{display:block;margin:8px 0;height:auto}.o svg{vertical-align:middle;margin-left:8px}
+.o.ok{background:#e4f4ec;border-color:#12805c;box-shadow:0 0 0 1px #12805c}.o.no{background:#fdeceb;border-color:#c0392b;box-shadow:0 0 0 1px #c0392b}.o:disabled{cursor:default;color:var(--tx)}
+</style><meta name="description" content="Simulasi SKD CPNS 2026: 110 soal, timer 100 menit, penilaian otomatis, dan pembahasan lengkap. Gratis untuk belajar.">
+<meta name="theme-color" content="#0f2a5c">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta property="og:type" content="website"><meta property="og:title" content="Latihan SKD CPNS 2026"><meta property="og:description" content="Simulasi SKD CPNS 2026: 110 soal, timer 100 menit, penilaian otomatis, dan pembahasan lengkap. Gratis untuk belajar.">
+<meta property="og:image" content="https://madadimas19.github.io/latihan-skd/og-image.png"><meta property="og:url" content="https://madadimas19.github.io/latihan-skd/">
+<meta name="twitter:card" content="summary_large_image">
+</head><body><div class="w" id="app"></div>
+<script>
+// Format: Kategori|Soal|Jawaban benar|Salah1|Salah2|Salah3|Pembahasan
+// Soal 0-29 = soal utama, 30-59 = soal cadangan (tambahkan baris baru di masing-masing blok untuk memperbanyak, set N_MAIN sesuai jumlah blok utama)
+const MAIN=`TWK|Pasal UUD 1945 yang menyatakan kedaulatan berada di tangan rakyat adalah|Pasal 1 ayat (2)|Pasal 1 ayat (3)|Pasal 2 ayat (1)|Pasal 33 ayat (1)|Pasal 1 ayat (2): kedaulatan berada di tangan rakyat dan dilaksanakan menurut UUD. Pasal 1 ayat (3) menyatakan Indonesia adalah negara hukum.
+TWK|Sidang pertama BPUPKI yang membahas dasar negara berlangsung pada|29 Mei - 1 Juni 1945|10 - 17 Juli 1945|18 Agustus 1945|17 Agustus 1945|Sidang I BPUPKI 29 Mei - 1 Juni 1945. Pada 1 Juni 1945 Soekarno menyampaikan pidato tentang Pancasila. Sidang II (10-17 Juli) membahas rancangan UUD.
+TWK|Kata "permusyawaratan" terdapat pada sila ke-|4|3|5|2|Sila ke-4: Kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan.
+TWK|Lembaga yang berwenang menguji undang-undang terhadap UUD 1945 adalah|Mahkamah Konstitusi|Mahkamah Agung|DPR|Komisi Yudisial|MK menguji UU terhadap UUD (Pasal 24C). MA menguji peraturan di bawah UU terhadap UU (Pasal 24A).
+TWK|Semboyan Bhinneka Tunggal Ika diambil dari kitab|Sutasoma|Negarakertagama|Pararaton|Arjunawiwaha|Kitab Sutasoma karya Mpu Tantular dari masa Majapahit.
+TWK|Sumpah Pemuda diikrarkan pada|28 Oktober 1928|20 Mei 1908|17 Agustus 1945|1 Juni 1945|Dihasilkan Kongres Pemuda II di Batavia: satu tanah air, satu bangsa, satu bahasa persatuan.
+TWK|UUD 1945 telah diamandemen sebanyak|4 kali|3 kali|5 kali|2 kali|Empat kali oleh MPR pada 1999, 2000, 2001, dan 2002.
+TWK|Presiden dan Wakil Presiden memegang jabatan lima tahun dan sesudahnya dapat dipilih kembali dalam jabatan yang sama hanya untuk|satu kali masa jabatan|dua kali masa jabatan|tiga kali masa jabatan|tanpa batas|Pasal 7 UUD 1945 hasil amandemen membatasi maksimal dua periode (5 + 5 tahun).
+TWK|Menurut UU No. 20 Tahun 2023, ASN terdiri atas|PNS dan PPPK|PNS dan CPNS|PNS dan honorer|PPPK dan honorer|ASN adalah profesi bagi PNS dan Pegawai Pemerintah dengan Perjanjian Kerja (PPPK).
+TWK|Ketentuan bahwa Negara Indonesia adalah negara hukum tercantum pada|Pasal 1 ayat (3)|Pasal 1 ayat (1)|Pasal 27 ayat (1)|Pasal 28D|Hasil amandemen ketiga menambahkan Pasal 1 ayat (3).
+TWK|Proklamasi Kemerdekaan dibacakan di|Jl. Pegangsaan Timur 56|Rengasdengklok|Lapangan Ikada|Istana Merdeka|Dibacakan Soekarno pada 17 Agustus 1945 pukul 10.00 di kediamannya, Jl. Pegangsaan Timur 56, Jakarta.
+TWK|Pancasila ditetapkan sebagai dasar negara oleh PPKI pada|18 Agustus 1945|17 Agustus 1945|1 Juni 1945|22 Juni 1945|PPKI mengesahkan UUD 1945 beserta Pembukaannya yang memuat Pancasila pada 18 Agustus 1945. 22 Juni 1945 adalah Piagam Jakarta.
+TWK|Lagu Indonesia Raya karya W.R. Supratman pertama kali dikumandangkan pada|Kongres Pemuda II 1928|Proklamasi 1945|Sidang BPUPKI|Konferensi Meja Bundar|Diperdengarkan lewat gesekan biola pada penutupan Kongres Pemuda II, 28 Oktober 1928.
+TIU|Sinonim kata "efisien" adalah|berdaya guna|boros|lambat|rumit|Efisien berarti tepat atau berdaya guna tanpa banyak membuang waktu, tenaga, dan biaya.
+TIU|Antonim kata "kompleks" adalah|sederhana|rumit|luas|padat|Kompleks berarti rumit/majemuk, lawan katanya sederhana.
+TIU|15% dari 240 adalah|36|30|40|24|15/100 x 240 = 36.
+TIU|Deret 2, 6, 18, 54, ... angka berikutnya adalah|162|108|148|216|Pola dikali 3: 54 x 3 = 162.
+TIU|Deret 1, 1, 2, 3, 5, 8, ... angka berikutnya adalah|13|11|12|14|Deret Fibonacci: jumlah dua angka sebelumnya, 5 + 8 = 13.
+TIU|Kendaraan melaju 60 km/jam menempuh 150 km. Waktu tempuhnya|2,5 jam|2 jam|3 jam|2,75 jam|Waktu = jarak / kecepatan = 150 / 60 = 2,5 jam.
+TIU|Semua pegawai disiplin. Budi adalah pegawai. Kesimpulannya|Budi disiplin|Budi tidak disiplin|Budi mungkin disiplin|Semua yang disiplin adalah pegawai|Silogisme: premis umum (semua pegawai disiplin) + premis khusus (Budi pegawai) = Budi disiplin.
+TIU|Jika 3x + 5 = 20, maka x =|5|4|6|7|3x = 15, maka x = 5.
+TIU|Luas persegi panjang dengan panjang 12 cm dan lebar 8 cm adalah|96 cm2|40 cm2|80 cm2|20 cm2|Luas = p x l = 12 x 8 = 96.
+TIU|Rata-rata dari 70, 80, 90, 100 adalah|85|90|80|95|Jumlah 340 dibagi 4 = 85.
+TIU|Harga barang Rp200.000 diskon 25%. Harga yang dibayar|Rp150.000|Rp175.000|Rp125.000|Rp50.000|Diskon 25% = 50.000, maka bayar 200.000 - 50.000 = 150.000.
+TKP|Atasan memberi tugas mendadak saat Anda sibuk. Sikap terbaik Anda|Mengatur prioritas dan mengomunikasikan kondisi kepada atasan|Menolak karena sedang sibuk|Mengerjakan asal selesai|Menyerahkan ke rekan tanpa izin|Pegawai profesional menyusun prioritas dan berkomunikasi terbuka agar semua tugas tetap berkualitas.
+TKP|Rekan kerja melakukan kesalahan yang merugikan unit. Anda|Mengingatkan secara pribadi dan membantu memperbaikinya|Melaporkannya ke semua orang|Membiarkannya saja|Menyalahkannya di rapat|Pendekatan kolaboratif dan menjaga harmoni menyelesaikan masalah tanpa merusak hubungan kerja.
+TKP|Masyarakat mengeluh pelayanan lambat. Anda|Meminta maaf, mendengarkan, lalu segera menindaklanjuti|Mengabaikan keluhan|Menyuruh datang lagi besok|Membela diri dan menyalahkan sistem|Berorientasi pelayanan: empati dan solusi cepat.
+TKP|Anda menemukan indikasi penyimpangan anggaran. Anda|Melaporkan lewat mekanisme pengaduan resmi|Diam agar aman|Ikut menikmati|Menyebarkannya di media sosial|Akuntabel dan berintegritas: lapor melalui jalur resmi (whistleblowing) yang melindungi pelapor.
+TKP|Pemohon layanan memberi Anda hadiah. Anda|Menolak dan melaporkan sebagai gratifikasi bila diperlukan|Menerimanya|Menerima lalu membagi ke rekan|Menerima diam-diam|Gratifikasi yang berhubungan dengan jabatan wajib ditolak/dilaporkan agar tidak terjadi konflik kepentingan.
+TKP|Terjadi perbedaan pendapat dalam tim. Anda|Berdiskusi mencari solusi terbaik bersama|Memaksakan pendapat sendiri|Mengundurkan diri dari tim|Mengabaikan perbedaan|Kolaboratif dan harmonis: musyawarah mencari kesepakatan terbaik.`;
+const RES=`TWK|Persamaan kedudukan warga negara dalam hukum dan pemerintahan diatur dalam|Pasal 27 ayat (1)|Pasal 28A|Pasal 30|Pasal 31|Pasal 27 ayat (1) UUD 1945: segala warga negara bersamaan kedudukannya di dalam hukum dan pemerintahan.
+TWK|Ketua BPUPKI adalah|dr. K.R.T. Radjiman Wedyodiningrat|Soekarno|Mohammad Hatta|Ki Hajar Dewantara|Radjiman Wedyodiningrat memimpin BPUPKI yang dibentuk Jepang pada 29 April 1945.
+TWK|Peristiwa Rengasdengklok terjadi pada|16 Agustus 1945|17 Agustus 1945|15 Agustus 1945|18 Agustus 1945|Golongan muda membawa Soekarno-Hatta ke Rengasdengklok pada 16 Agustus 1945 agar segera memproklamasikan kemerdekaan.
+TWK|"Kemanusiaan yang adil dan beradab" merupakan sila ke-|2|1|3|5|Sila ke-2 berlambang rantai, mengandung nilai kemanusiaan.
+TWK|Lembaga negara pemeriksa pengelolaan keuangan negara adalah|BPK|BPKP|KPK|OJK|BPK (Pasal 23E UUD 1945) memeriksa pengelolaan dan tanggung jawab keuangan negara.
+TWK|Hari Kebangkitan Nasional diperingati setiap|20 Mei|28 Oktober|2 Mei|10 November|Berdasarkan berdirinya Budi Utomo pada 20 Mei 1908.
+TWK|Pancasila sebagai dasar negara tercantum pada Pembukaan UUD 1945 alinea|keempat|pertama|kedua|ketiga|Alinea keempat memuat tujuan negara, bentuk negara, dan dasar negara (Pancasila).
+TWK|Sistem pemerintahan Indonesia menurut UUD 1945 adalah|presidensial|parlementer|semi-presidensial|monarki konstitusional|Presiden adalah kepala negara sekaligus kepala pemerintahan dan dipilih langsung oleh rakyat.
+TWK|Kekuasaan membentuk undang-undang dipegang oleh|DPR bersama Presiden|Mahkamah Agung|Mahkamah Konstitusi|BPK|Pasal 20 UUD 1945: DPR memegang kekuasaan membentuk UU, dibahas dan disetujui bersama Presiden.
+TWK|Presiden Soeharto menyatakan berhenti dari jabatan pada|21 Mei 1998|13 Mei 1998|1 Juni 1998|20 Mei 1998|Pengunduran diri 21 Mei 1998 menandai awal era Reformasi.
+TWK|Jumlah nilai dasar ASN dalam BerAKHLAK adalah|7|5|6|8|Berorientasi Pelayanan, Akuntabel, Kompeten, Harmonis, Loyal, Adaptif, Kolaboratif.
+TWK|Pemerintahan daerah dan otonomi daerah diatur dalam|Pasal 18 UUD 1945|Pasal 20|Pasal 25|Pasal 33|Pasal 18 mengatur pembagian wilayah dan pemerintahan daerah.
+TWK|Bumi, air, dan kekayaan alam dikuasai negara untuk|sebesar-besarnya kemakmuran rakyat|kepentingan investor|keuntungan negara saja|kepentingan pemerintah daerah|Pasal 33 ayat (3) UUD 1945.
+TWK|Belanda mengakui kedaulatan Indonesia melalui KMB pada|27 Desember 1949|17 Agustus 1950|18 Agustus 1945|1 Januari 1950|Penyerahan kedaulatan dilakukan 27 Desember 1949.
+TWK|Bab tentang Hak Asasi Manusia dalam UUD 1945 tercantum pada|Pasal 28A - 28J|Pasal 27|Pasal 29|Pasal 31|Bab XA berisi Pasal 28A sampai 28J.
+TIU|Sinonim kata "akurat" adalah|tepat|salah|samar|cepat|Akurat berarti teliti, saksama, dan tepat.
+TIU|Antonim kata "transparan" adalah|tertutup|jelas|bening|terbuka|Transparan berarti jelas/terbuka, lawannya tertutup.
+TIU|Deret 3, 7, 11, 15, ... angka berikutnya adalah|19|18|20|21|Beda tetap +4, maka 15 + 4 = 19.
+TIU|25% dari 360 adalah|90|80|100|120|360 / 4 = 90.
+TIU|Hasil 12 x 15 adalah|180|170|160|190|12 x 15 = 12 x 10 + 12 x 5 = 120 + 60 = 180.
+TIU|Keliling lingkaran berjari-jari 7 cm (pi = 22/7) adalah|44 cm|22 cm|154 cm|14 cm|K = 2 x pi x r = 2 x 22/7 x 7 = 44.
+TIU|6 orang menyelesaikan pekerjaan dalam 10 hari. Jika 12 orang, waktunya|5 hari|20 hari|8 hari|6 hari|Perbandingan berbalik nilai: 6 x 10 = 12 x t, maka t = 5.
+TIU|Jika hujan maka jalan basah. Jalan tidak basah. Kesimpulannya|Tidak hujan|Hujan|Jalan mungkin basah|Hujan tapi jalan kering|Modus tollens: p maka q, tidak q, maka tidak p.
+TIU|Median dari 3, 5, 7, 9, 11 adalah|7|5|9|35|Nilai tengah dari data terurut adalah 7.
+TIU|Perbandingan 3 : 5 dengan jumlah 40. Bagian terkecil adalah|15|10|20|25|Total 8 bagian, 40/8 = 5, maka 3 x 5 = 15.
+TKP|Anda diminta lembur untuk menyelesaikan layanan publik yang mendesak. Anda|Bersedia dan mengatur diri agar tetap prima|Menolak karena jam kerja selesai|Bersedia sambil mengeluh|Pura-pura sakit|Loyal dan berorientasi pelayanan: tugas publik yang mendesak diprioritaskan secara profesional.
+TKP|Ada rekan baru yang kesulitan memahami pekerjaan. Anda|Membimbingnya dengan sabar|Membiarkannya belajar sendiri|Mengerjakan semuanya untuknya|Melaporkan ketidakmampuannya|Kolaboratif: berbagi pengetahuan membangun tim yang kuat.
+TKP|Ada aturan baru yang belum Anda pahami. Anda|Mempelajarinya dan bertanya kepada yang berwenang|Menunggu orang lain menjelaskan|Mengabaikannya|Memakai aturan lama|Kompeten dan adaptif: proaktif belajar peraturan baru.
+TKP|Atasan meminta Anda memalsukan laporan. Anda|Menolak dengan sopan dan menjelaskan risikonya|Menuruti agar aman|Menuruti lalu melapor di belakangnya|Pura-pura tidak mendengar|Integritas lebih utama daripada perintah yang melanggar hukum.
+TKP|Kantor menerapkan aplikasi baru. Anda|Segera belajar dan memanfaatkannya|Tetap memakai cara lama|Menunggu sampai dipaksa|Mengeluh ke rekan|Adaptif terhadap perubahan dan teknologi.`;
+const NEW=`TWK|Penulisan kata baku yang benar adalah|analisis|analisa|anilisis|analisys|Menurut KBBI bentuk bakunya "analisis".
+TWK|Sistem pertahanan dan keamanan negara Indonesia menurut Pasal 30 UUD 1945 adalah|sistem pertahanan dan keamanan rakyat semesta|sistem pertahanan profesional murni|sistem wajib militer|sistem pertahanan aliansi|Pasal 30 ayat (2): dilaksanakan melalui sistem hankam rakyat semesta oleh TNI dan Polri sebagai kekuatan utama, rakyat sebagai pendukung.
+TKP|Pemohon layanan tidak memahami persyaratan. Anda|menjelaskan dengan sabar sampai ia paham|memberi brosur lalu mempersilakan ia pergi|menyuruhnya bertanya ke loket lain|meminta datang kembali bila sudah lengkap|Berorientasi pelayanan: empati dan informasi yang jelas.
+TKP|Antrean panjang dan sistem layanan error. Anda|meminta maaf, memberi estimasi, dan melayani manual bila memungkinkan|meminta pemohon menunggu tanpa penjelasan|menutup loket sementara|menyarankan datang esok hari|Solusi aktif dan komunikasi terbuka menjaga kepercayaan publik.
+TKP|Pemohon lansia kesulitan memakai aplikasi layanan. Anda|membantu langsung hingga selesai|memberi panduan lisan singkat|menyuruhnya meminta bantuan anaknya|menyuruhnya mengurus sendiri lewat aplikasi|Pelayanan inklusif memperhatikan kebutuhan kelompok rentan.
+TKP|Instansi lain meminta data yang Anda pegang. Anda|memberikan sesuai prosedur dan kewenangan|meminta atasan memutuskan tanpa memberi kabar|menolak dengan alasan sibuk|memberikan tanpa prosedur|Kolaboratif tetapi tetap akuntabel: data dibagikan sesuai aturan.
+TKP|Proyek melibatkan banyak unit kerja. Anda|menginisiasi rapat koordinasi rutin|menghubungi unit lain saat ada masalah|menunggu unit lain menghubungi|bekerja sendiri sesuai tugas unit|Jejaring kerja dibangun dengan komunikasi proaktif dan berkala.
+TKP|Unit lain menolak berbagi data yang Anda perlukan. Anda|menjelaskan tujuan dan mengajukan permintaan resmi|meminta atasan menghubungi mereka|mencari data dari sumber lain|mengeluh kepada rekan|Pendekatan komunikatif dan sesuai prosedur menjaga hubungan kerja.
+TKP|Anda mewakili instansi di forum yang kurang Anda kuasai. Anda|mempelajari materi dan berkonsultasi dengan yang ahli|meminta pegawai lebih ahli menggantikan atas izin atasan|hadir tanpa persiapan|menolak tanpa alasan|Kompeten: menyiapkan diri adalah bentuk tanggung jawab.
+TKP|Rapat bertepatan dengan waktu ibadah rekan yang berbeda agama. Anda|menyesuaikan jadwal agar semua dapat hadir|menunda sebagian agenda|tetap rapat tanpa rekan tersebut|mengabaikan|Menghargai keberagaman dan menjaga harmoni.
+TKP|Rekan dari suku tertentu sering menjadi bahan candaan. Anda|menegur candaan itu dan merangkul rekan tersebut|mengalihkan pembicaraan|diam saja|ikut tertawa|Sikap anti diskriminasi dan menghargai perbedaan.
+TKP|Tradisi adat warga bertabrakan dengan jadwal program. Anda|berdialog dengan tokoh adat untuk mencari jadwal yang cocok|menjalankan program dan menjelaskan alasannya|menunda program tanpa keterangan|meminta warga mengikuti jadwal|Kepekaan sosial budaya dan musyawarah.
+TKP|Instansi menerapkan aplikasi baru. Anda|aktif belajar lewat panduan dan pelatihan|menunggu rekan mengajari|tetap memakai cara lama|menolak memakainya|Adaptif terhadap perkembangan teknologi.
+TKP|Anda menerima email mencurigakan berisi tautan. Anda|tidak membukanya dan melaporkan ke tim TI|menghapusnya saja|membukanya lalu bertanya|membagikannya ke rekan untuk dicek|Keamanan informasi: waspada phishing dan laporkan.
+TKP|Anda perlu menyimpan data layanan publik. Anda|menyimpan di sistem resmi dengan akses terbatas|menyimpan di laptop dengan kata sandi|meminta rekan menyimpannya|menyimpan di flashdisk tanpa kata sandi|Data wajib disimpan secara aman dan akuntabel.
+TKP|Anda sering terlambat karena macet. Anda|berangkat lebih awal dan memperbaiki disiplin|meminta maaf setiap kali terlambat|menyalahkan lalu lintas|mengabaikannya|Profesional: bertanggung jawab atas disiplin diri.
+TKP|Beberapa tugas memiliki tenggat bersamaan. Anda|menyusun prioritas dan melaporkannya ke atasan|mengerjakan yang termudah dahulu|mengerjakan semuanya sekaligus|menunda semuanya|Manajemen prioritas dan komunikasi.
+TKP|Anda menyadari kesalahan input data yang sudah dikirim. Anda|segera mengakui dan memperbaikinya|memperbaiki diam-diam|menunggu sampai ketahuan|menyalahkan sistem|Akuntabel dan jujur.
+TKP|Rekan meminta Anda menandatangani daftar hadir untuknya padahal ia tidak hadir. Anda|menolak dan mengingatkan aturan disiplin|menolak tanpa menjelaskan|menandatangani sekali saja|menandatanganinya|Integritas: tidak mengikuti pelanggaran.
+TKP|Rekan menyebar ujaran kebencian terhadap suatu kelompok di grup kantor. Anda|menegur, mengingatkan nilai kebangsaan, dan melapor bila berulang|menghapus pesan itu|diam saja|ikut berkomentar|Anti radikalisme: menjaga persatuan dan toleransi.
+TKP|Anda diajak bergabung dengan organisasi yang menolak Pancasila. Anda|menolak dan melaporkan kepada pihak berwenang|menolak saja|mempertimbangkannya dulu|hadir sekali untuk melihat|Setia pada Pancasila dan NKRI.
+TKP|Beredar hoaks tentang kebijakan instansi Anda. Anda|mengklarifikasi dengan data resmi|menghapus pesan hoaks|mengabaikan|menyebarkannya ulang|Literasi digital dan tanggung jawab informasi.
+TKP|Pemohon layanan marah-marah di loket Anda. Anda|tetap tenang, mendengarkan, dan menawarkan solusi|meminta bantuan rekan senior|meminta pemohon tenang dulu|membalas dengan tegas|Pelayanan publik membutuhkan pengendalian emosi.
+TKP|Atasan baru memiliki gaya kepemimpinan berbeda. Anda|menyesuaikan diri dan berkomunikasi terbuka|menyesuaikan secukupnya|mengeluh kepada rekan|menolak arahannya|Adaptif dan kolaboratif.
+TKP|Anda yang masih junior ditunjuk memimpin tim proyek. Anda|menerima dan meminta masukan dari senior|menerima lalu bekerja sendirian|menolak karena merasa belum siap|menerima lalu menyerahkan semua ke anggota|Kompeten dan terbuka terhadap masukan.
+TKP|Rekan sakit sehingga pekerjaan tim terhambat. Anda|membantu sementara dan melapor ke atasan|melapor ke atasan saja|menunggu rekan sembuh|membiarkannya|Harmonis dan kolaboratif.
+TKP|Anda tidak setuju dengan keputusan atasan. Anda|menyampaikan pendapat dengan sopan lalu melaksanakan keputusan|melaksanakan sambil mengeluh|menunda pelaksanaan|menolak melaksanakan|Loyal dan komunikatif tanpa merusak hubungan kerja.
+TKP|Anda ditempatkan di daerah terpencil dengan fasilitas minim. Anda|menerima dan menjalankan tugas dengan sungguh-sungguh|menerima tetapi sering meminta pindah|menerima sambil mengeluh|menolak penempatan|ASN siap ditempatkan di seluruh wilayah NKRI.
+TKP|Ada pelatihan di luar jam kerja. Anda|mengikutinya untuk meningkatkan kompetensi|mengikutinya bila ada insentif|meminta rekan menggantikan|menolak mengikuti|Kompeten: pengembangan diri berkelanjutan.
+TKP|Warga menanyakan hal di luar tugas Anda. Anda|mengantar atau mengarahkan ke petugas yang tepat|mencoba menjawab seadanya|menjawab tidak tahu|mengabaikannya|Pelayanan tuntas walau di luar tugas langsung.
+TKP|Target kinerja unit belum tercapai. Anda|melaporkan apa adanya dan menyusun rencana perbaikan|melaporkan disertai alasan|menunda pelaporan|mengubah angka capaian|Akuntabel, jujur, dan berorientasi perbaikan.
+TKP|Rekan memakai fasilitas kantor untuk usaha pribadi. Anda|mengingatkan dan melapor bila berlanjut|mengingatkan saja|diam saja|ikut memakainya|Integritas: fasilitas negara untuk kepentingan dinas.
+TKP|Keluarga meminta Anda membantu seorang kerabat lolos seleksi. Anda|menolak sopan dan menyarankan ikut seleksi sesuai prosedur|menolak tanpa penjelasan|menyarankan membicarakan ke atasan|membantu secara diam-diam|Seleksi berbasis merit bebas KKN.
+TKP|Bencana alam terjadi di wilayah kerja Anda. Anda|ikut membantu penanganan sesuai tugas dan koordinasi|menunggu instruksi saja|hanya menyumbang|melanjutkan rutinitas biasa|Berorientasi pelayanan dan peduli sosial.
+TKP|Anda melayani warga penyandang disabilitas. Anda|menyediakan layanan sesuai kebutuhannya|meminta pendamping membantu|melayani seperti pemohon lain|mengarahkan ke loket lain|Pelayanan inklusif dan ramah disabilitas.
+TKP|Anda dikritik pedas oleh warga di media sosial. Anda|menanggapi santun dan memperbaiki hal yang valid|melaporkan ke atasan|menghapus komentar|membalas dengan emosi|Terbuka terhadap kritik dan menjaga citra instansi.`;
+const NEW2=`TWK|Jaminan kemerdekaan memeluk agama dan beribadah tercantum dalam|Pasal 29 ayat (2)|Pasal 28J|Pasal 31|Pasal 33|Pasal 29 ayat (2) UUD 1945: negara menjamin kemerdekaan tiap penduduk memeluk agamanya dan beribadat menurut agamanya.
+TWK|Wawasan Nusantara adalah cara pandang bangsa Indonesia mengenai|diri dan lingkungannya yang beragam dengan mengutamakan persatuan|hukum internasional semata|kepentingan daerah masing-masing|kekuatan militer|Wawasan Nusantara menempatkan persatuan bangsa dan keutuhan wilayah di atas kepentingan golongan.
+TWK|Kerajaan Hindu tertua di Indonesia adalah|Kutai|Majapahit|Sriwijaya|Mataram|Kutai (Kalimantan Timur) abad ke-4 M, dibuktikan prasasti Yupa.
+TWK|Trilogi Politik Etis terdiri atas|irigasi, edukasi, dan emigrasi|irigasi, edukasi, dan ekspansi|industri, edukasi, dan emigrasi|irigasi, ekonomi, dan emigrasi|Politik Etis (balas budi) digagas C. Th. van Deventer pada 1901.
+TWK|Peristiwa 10 November 1945, yang diperingati sebagai Hari Pahlawan, terjadi di|Surabaya|Ambarawa|Bandung|Medan|Pertempuran Surabaya melawan pasukan Sekutu/NICA.
+TWK|Perjanjian yang mengakui secara de facto wilayah Jawa, Madura, dan Sumatra adalah|Linggarjati|Renville|Roem-Royen|Konferensi Meja Bundar|Perjanjian Linggarjati (1946/1947) menghasilkan pengakuan de facto tersebut.
+TWK|Dekrit Presiden 5 Juli 1959 menyatakan kembali berlakunya|UUD 1945|UUDS 1950|Konstitusi RIS|Piagam Jakarta|Dekrit membubarkan Konstituante dan memberlakukan kembali UUD 1945.
+TWK|Konstitusi yang berlaku pada 27 Desember 1949 - 17 Agustus 1950 adalah|Konstitusi RIS|UUDS 1950|UUD 1945|TAP MPR|Periode negara serikat (RIS) memakai Konstitusi RIS.
+TWK|Desentralisasi berarti|penyerahan urusan pemerintahan dari pusat kepada daerah otonom|pemusatan kekuasaan di pusat|pelimpahan wewenang kepada aparat pusat di daerah|penugasan pusat kepada desa|Desentralisasi menjadi dasar otonomi daerah (Pasal 18 UUD 1945).
+TWK|Huruf "L" dalam nilai dasar ASN BerAKHLAK adalah|Loyal|Lugas|Layak|Lancar|BerAKHLAK: Berorientasi Pelayanan, Akuntabel, Kompeten, Harmonis, Loyal, Adaptif, Kolaboratif.
+TWK|Kalimat efektif adalah kalimat yang|hemat kata, jelas, dan mudah dipahami|panjang dan rinci|banyak memakai istilah asing|selalu berupa kalimat majemuk|Ciri kalimat efektif: kesepadanan, kehematan, kejelasan, dan kelogisan.
+TWK|Penulisan kata depan "di" yang benar terdapat pada kalimat|Buku itu diletakkan di atas meja.|Buku itu di letakkan di atas meja.|Buku itu diletakkan diatas meja.|Buku itu di letakkan diatas meja.|"di" sebagai kata depan dipisah; "di-" sebagai imbuhan pada kata kerja ditulis serangkai.
+TWK|Pancasila sebagai ideologi terbuka berarti|nilai dasarnya tetap, nilai instrumentalnya dapat dikembangkan|nilai dasarnya dapat diubah sesuai zaman|bebas ditafsirkan oleh siapa saja|tertutup bagi perkembangan zaman|Ideologi terbuka: nilai dasar tetap, nilai instrumental dan praksis dinamis.
+TWK|Hak dan kewajiban warga negara dalam upaya pembelaan negara diatur dalam|Pasal 27 ayat (3)|Pasal 28|Pasal 31 ayat (1)|Pasal 33 ayat (1)|Pasal 27 ayat (3) UUD 1945 (bela negara).
+TWK|Nilai integritas ASN tercermin pada sikap|jujur dan konsisten antara ucapan dan tindakan|menuruti semua perintah atasan|mengutamakan kepentingan golongan|menghindari tanggung jawab|Integritas = kejujuran, konsistensi, dan keteguhan pada nilai.
+TKP|Rekan senior melanggar SOP pelayanan. Anda|mengingatkan sopan dan menyarankan mengikuti SOP|melaporkannya langsung ke atasan|membiarkan karena ia senior|mengikuti caranya|Berintegritas tanpa merusak hubungan kerja.
+TKP|Atasan memberi umpan balik negatif atas kinerja Anda. Anda|menerima dan segera memperbaiki kinerja|meminta penjelasan lalu memperbaiki|merasa tersinggung|membantah|Terbuka pada kritik membangun.
+TKP|Pekerjaan rutin terasa membosankan. Anda|mencari cara agar pekerjaan lebih efisien|tetap mengerjakan sesuai standar|mengerjakan seadanya|meminta dipindahkan|Inovatif dan profesional.
+TKP|Rekan meminta bantuan saat Anda mengejar tenggat. Anda|membantu setelah mengatur ulang prioritas|menjadwalkan bantuan di lain waktu|menolak dengan alasan sibuk|mengabaikannya|Kolaboratif dan terukur.
+TKP|Pemohon menawarkan uang agar urusannya dipercepat. Anda|menolak tegas dan melaporkannya|menolak tegas saja|menjelaskan prosedur tanpa menolak uang|menerimanya|Anti suap dan gratifikasi.
+TKP|Anda diminta menyusun kebijakan dengan data yang belum lengkap. Anda|mengumpulkan data pendukung dan berkonsultasi|menyusun berdasarkan pengalaman|menunggu tanpa bertindak|menyusun asal selesai|Kebijakan berbasis data.
+TKP|Anda ditempatkan di unit yang tidak sesuai latar belakang. Anda|mempelajari tugas baru dengan sungguh-sungguh|bekerja sambil mengajukan mutasi|bekerja seadanya|menolak penempatan|Adaptif dan profesional.
+TKP|Bahasa daerah warga berbeda dengan Anda. Anda|belajar bahasa setempat dan dibantu penerjemah|memakai bahasa Indonesia sederhana|meminta warga berbahasa Indonesia|menghindari warga|Peka sosial budaya.
+TKP|Sistem informasi unit sering bermasalah. Anda|melaporkan dan mengusulkan perbaikan|melaporkan masalah saja|memakai cara manual diam-diam|membiarkannya|Proaktif dan solutif.
+TKP|Rekan sering menyebar gosip di kantor. Anda|mengingatkan dan memfokuskan diri pada pekerjaan|menjauh dari gosip|mendengarkan saja|ikut bergosip|Menjaga lingkungan kerja yang harmonis.
+TKP|Anda diminta menyampaikan pengumuman penting kepada publik. Anda|memastikan informasi benar lalu menyampaikan dengan jelas|menyampaikan sesuai naskah|menyampaikan ringkas|menyampaikan dari ingatan|Akurasi dan kejelasan informasi publik.
+TKP|Rapat berlangsung tegang. Anda|menenangkan suasana dan mengarahkan ke solusi|mengusulkan jeda rapat|diam saja|ikut berdebat|Harmonis dan berorientasi solusi.
+TKP|Anda memerlukan keahlian rekan dari instansi lain. Anda|membangun komunikasi resmi dan saling berbagi|meminta lewat teman pribadi|menunggu ia menawarkan|mengerjakan sendiri tanpa keahlian itu|Jejaring kerja antarinstansi.
+TKP|Anda menemukan kekeliruan pada kebijakan lama. Anda|mengusulkan perbaikan disertai data|menyampaikannya kepada atasan|membiarkannya|mengubahnya sendiri tanpa izin|Inovatif namun sesuai prosedur.
+TKP|Pemohon datang mendekati jam tutup layanan. Anda|tetap melayani hingga tuntas|melayani dan menyarankan datang lebih awal lain kali|meminta datang besok|menutup loket|Berorientasi pelayanan.`;
+const P=s=>s.split('\n').map(l=>{const a=l.split('|');return{cat:a[0],q:a[1],ok:a[2],w:a.slice(3,6),ex:a[6]}});
+const ALL=[...P(MAIN),...P(RES),...P(NEW),...P(NEW2)],REQ={TWK:30,TIU:35,TKP:45},GEN=14,K='cpns2026_v3',MIN=100,PG={TWK:65,TIU:80,TKP:166},MX={TWK:150,TIU:175,TKP:225},PT=[5,3,2,1];
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const $=document.getElementById('app'),I=id=>document.getElementById(id),e=s=>String(s).startsWith('<svg')?String(s):String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let rnd=Math.random;const R=(a,b)=>a+Math.floor(rnd()*(b-a+1)),pk=a=>a[R(0,a.length-1)],op=(a,t)=>[a+t,a-t,a+2*t,a+3*t,a-2*t].filter(x=>x>0&&x!==a).slice(0,3);
+const G=[
+()=>{const a=pk([10,15,20,25,30,40]),b=R(4,15)*40,r=a*b/100;return{q:`${a}% dari ${b} adalah`,ok:r,w:op(r,10),ex:`${a}/100 x ${b} = ${r}.`}},
+()=>{const s=R(2,9),d=R(2,7),x=[0,1,2,3].map(i=>s+i*d),r=s+4*d;return{q:`Deret ${x.join(', ')}, ... angka berikutnya adalah`,ok:r,w:op(r,d),ex:`Beda tetap +${d}, maka ${x[3]} + ${d} = ${r}.`}},
+()=>{const s=R(2,4),m=R(2,3),x=[s,s*m,s*m*m,s*m**3],r=s*m**4;return{q:`Deret ${x.join(', ')}, ... angka berikutnya adalah`,ok:r,w:op(r,s*m),ex:`Setiap suku dikali ${m}: ${x[3]} x ${m} = ${r}.`}},
+()=>{const v=pk([40,50,60,72,80]),t=R(2,5),r=v*t;return{q:`Kendaraan melaju ${v} km/jam selama ${t} jam. Jarak tempuhnya (km) adalah`,ok:r,w:op(r,10),ex:`Jarak = kecepatan x waktu = ${v} x ${t} = ${r} km.`}},
+()=>{const n=R(2,6)*2,h=R(4,9)*2,r=h/2;return{q:`${n} orang menyelesaikan pekerjaan dalam ${h} hari. Jika dikerjakan ${n*2} orang, selesai dalam (hari)`,ok:r,w:op(r,2),ex:`Berbanding terbalik: ${n} x ${h} = ${n*2} x t, maka t = ${r}.`}},
+()=>{const a=R(1,4),b=R(a+1,6),m=R(3,8),r=a*m;return{q:`Perbandingan ${a} : ${b} dengan jumlah ${(a+b)*m}. Bagian terkecil adalah`,ok:r,w:op(r,m),ex:`Total ${a+b} bagian, 1 bagian = ${(a+b)*m}/${a+b} = ${m}, maka ${a} x ${m} = ${r}.`}},
+()=>{const p=R(4,20)*10000,d=pk([10,20,25,50]),r=p-p*d/100,f=x=>'Rp'+x.toLocaleString('id-ID');return{q:`Harga barang ${f(p)} didiskon ${d}%. Harga yang dibayar adalah`,ok:f(r),w:op(r,5000).map(f),ex:`Diskon = ${d}% x ${f(p)} = ${f(p*d/100)}, maka bayar ${f(p)} - ${f(p*d/100)} = ${f(r)}.`}},
+()=>{const x=R(2,9),a=R(2,6),b=R(1,9),c=a*x+b;return{q:`Jika ${a}x + ${b} = ${c}, maka x =`,ok:x,w:op(x,1),ex:`${a}x = ${c} - ${b} = ${c-b}, maka x = ${x}.`}}];
+const mul=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296},NG=300;
+const shs=a=>a.map(x=>[rnd(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const N='#0f2a5c',sv=s=>`<svg viewBox="0 0 60 60" width="60" height="60">${s}</svg>`,fr=s=>`<rect x="1" y="1" width="58" height="58" rx="6" fill="#fff" stroke="#9aa8c4"/>${s}`;
+const strip=a=>{const W=a.length*68+68;return`<svg viewBox="0 0 ${W} 62" style="width:${W}px;max-width:100%">${a.map((s,k)=>`<g transform="translate(${k*68+2} 1)">${fr(s)}</g>`).join('')}<g transform="translate(${a.length*68+2} 1)">${fr('<text x="30" y="40" font-size="28" text-anchor="middle" fill="#0f2a5c">?</text>')}</g></svg>`};
+const arw=r=>`<g transform="rotate(${r} 30 30)"><path d="M30 8L43 31L33 27V52H27V27L17 31Z" fill="${N}"/></g>`,
+cl=p=>[[8,8],[34,8],[34,34],[8,34]].map((c,k)=>`<rect x="${c[0]}" y="${c[1]}" width="18" height="18" fill="${k==p?N:'none'}" stroke="${N}"/>`).join(''),
+dt=n=>[...Array(n).keys()].map(k=>`<circle cx="${14+k%3*16}" cy="${14+Math.floor(k/3)*16}" r="5" fill="${N}"/>`).join(''),
+SH=[`<circle cx="30" cy="30" r="17" fill="${N}"/>`,`<rect x="14" y="14" width="32" height="32" fill="${N}"/>`,`<polygon points="30,12 48,46 12,46" fill="${N}"/>`,`<polygon points="30,10 50,30 30,50 10,30" fill="${N}"/>`],QF='Pilih gambar yang melengkapi pola berikut.';
+const AN=[['Dokter','Rumah Sakit'],['Guru','Sekolah'],['Petani','Sawah'],['Hakim','Pengadilan'],['Nelayan','Laut'],['Montir','Bengkel'],['Kasir','Toko']],AL=[['Pisau','memotong'],['Pena','menulis'],['Palu','memukul'],['Sapu','membersihkan'],['Kunci','membuka'],['Jarum','menjahit'],['Timbangan','menimbang']],
+SY=[['akurat','tepat','meleset'],['transparan','terbuka','tertutup'],['efisien','berdaya guna','boros'],['kompleks','rumit','sederhana'],['optimal','maksimal','minimal'],['mutakhir','terbaru','usang'],['fleksibel','luwes','kaku'],['valid','sahih','keliru'],['konsisten','taat asas','berubah-ubah'],['solid','kukuh','rapuh'],['inovatif','pembaru','kolot'],['produktif','berhasil guna','mandul']];
+const an=(L,t)=>()=>{const p=shs(L).slice(0,5);return{q:`${p[0][0]} : ${p[0][1]} = ${p[1][0]} : ...`,ok:p[1][1],w:p.slice(2,5).map(x=>x[1]),ex:`Hubungan ${t}: ${p[0][0]} berkaitan dengan ${p[0][1]}, maka ${p[1][0]} berkaitan dengan ${p[1][1]}.`}};
+const GX=[
+()=>{const p=R(5,20),l=R(3,p-1),r=p*l;return{q:`Persegi panjang berukuran ${p} cm x ${l} cm. Luasnya (cm2) adalah`,ok:r,w:op(r,p),ex:`L = p x l = ${p} x ${l} = ${r}.`}},
+()=>{const m=R(60,90),a=R(2,9),b=R(2,9),x=shs([m+a,m-a,m+b,m-b]);return{q:`Rata-rata dari ${x.join(', ')} adalah`,ok:m,w:op(m,2),ex:`Jumlah = ${m*4}, dibagi 4 = ${m}.`}},
+()=>{const y=R(10,40),x=y+R(2,20),S=x+y,D=x-y;return{q:`Jumlah dua bilangan ${S} dan selisihnya ${D}. Bilangan terbesar adalah`,ok:x,w:op(x,2),ex:`Terbesar = (${S} + ${D}) / 2 = ${x}.`}},
+an(AN,'pekerja dan tempat kerja'),an(AL,'alat dan fungsinya'),
+()=>{const sy=pk([1,2]),p=shs(SY).slice(0,4);return{q:`${sy==1?'Sinonim':'Antonim'} kata "${p[0][0]}" adalah`,ok:p[0][sy],w:p.slice(1).map(x=>x[sy]),ex:`${p[0][0]} bermakna ${p[0][1]}; lawan katanya ${p[0][2]}.`}},
+()=>{const s=pk(['pegawai','mahasiswa','atlet','guru','relawan']),b=pk(['disiplin','teliti','jujur','rajin','santun']),n=pk(['Andi','Sari','Budi','Rina']);return{q:`Semua ${s} ${b}. ${n} adalah ${s}. Kesimpulannya`,ok:`${n} ${b}`,w:[`${n} tidak ${b}`,`${n} mungkin ${b}`,`Semua yang ${b} adalah ${s}`],ex:`Silogisme: semua ${s} ${b} dan ${n} termasuk ${s}, maka ${n} ${b}.`}},
+()=>{const d=pk([45,90,135]),r=pk([0,45,90,135,180,225,270,315]),f=k=>(r+d*k)%360,a=f(3),w=shs([45,90,135,180,270].map(x=>(a+x)%360)).slice(0,3);return{q:QF,fig:strip([0,1,2].map(k=>arw(f(k)))),ok:sv(arw(a)),w:w.map(x=>sv(arw(x))),ex:`Setiap gambar diputar ${d} derajat searah jarum jam dari gambar sebelumnya, sehingga gambar berikutnya menghadap ${a} derajat dari arah atas.`}},
+()=>{const s=pk([1,3]),p=R(0,3),f=k=>(p+s*k)%4,a=f(3);return{q:QF,fig:strip([0,1,2].map(k=>cl(f(k)))),ok:sv(cl(a)),w:[0,1,2,3].filter(x=>x!=a).map(x=>sv(cl(x))),ex:`Kotak yang diarsir berpindah satu petak ${s==1?'searah':'berlawanan arah'} jarum jam pada setiap langkah.`}},
+()=>{const a=R(1,2),d=R(1,2),z=a+3*d,w=[z-1,z+1,z-2,z+2].filter(x=>x>0&&x<10).slice(0,3);return{q:QF,fig:strip([0,1,2].map(k=>dt(a+d*k))),ok:sv(dt(z)),w:w.map(x=>sv(dt(x))),ex:`Jumlah lingkaran bertambah ${d} setiap langkah: ${a}, ${a+d}, ${a+2*d}, maka berikutnya ${z}.`}},
+()=>{const L=pk([2,3]),o=shs(SH).slice(0,L),a=o[5%L];return{q:QF,fig:strip([0,1,2,3,4].map(k=>o[k%L])),ok:sv(a),w:SH.filter(x=>x!=a).map(x=>sv(x)),ex:`Bentuk berulang setiap ${L} gambar, sehingga gambar ke-6 sama dengan gambar ke-${5%L+1}.`}}];
+const GT=[...G,...GX];
+function gq(id){const k=+id.slice(1);rnd=mul(k*7919+13);const x=GT[k%GT.length]();rnd=Math.random;return{cat:'TIU',q:x.q,fig:x.fig,ok:String(x.ok),w:x.w.map(String),ex:x.ex}}
+let S,Q,A,i,T,tid;
+function load(){try{S=JSON.parse(localStorage.getItem(K))}catch(x){}
+if(!S||!S.slots){S={slots:{},res:{},c:{},n:0};for(const c in REQ){const ids=sh(ALL.map((q,k)=>k).filter(k=>ALL[k].cat==c).concat(c=='TIU'?[...Array(NG).keys()].map(k=>'g'+k):[]));S.slots[c]=ids.slice(0,REQ[c]);S.res[c]=ids.slice(REQ[c])}}}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(x){}}
+const pts=(q,a)=>{if(!a)return 0;if(q.cat=='TKP')return PT[[q.ok,...q.w].indexOf(a)];return a==q.ok?5:0};
+const twice=(b,fn)=>{const t=b.textContent;b.onclick=()=>{if(b.dataset.s){fn();return}b.dataset.s=1;b.textContent='Ketuk lagi untuk konfirmasi';setTimeout(()=>{delete b.dataset.s;b.textContent=t},3000)}};
+function home(){const rsv=Object.values(S.res).flat().length;
+$.innerHTML=`<div class="hero"><span class="pill">Simulasi SKD</span><h1>Latihan SKD CPNS 2026</h1><p>110 soal, 100 menit, penilaian mengikuti sistem CAT BKN.</p></div><div class="c"><div class="st"><div><b>30</b><span>TWK</span></div><div><b>35</b><span>TIU</span></div><div><b>45</b><span>TKP</span></div></div><p class="mu" style="margin:0 0 12px">TWK dan TIU: benar 5, salah 0. TKP: nilai 1 sampai 5 sesuai pilihan. Ambang batas formasi umum: TWK 65, TIU 80, TKP 166. Soal dan pilihan diacak tiap sesi.</p><p class="mu">Sesi selesai: <b>${S.n}</b> &nbsp;|&nbsp; Soal cadangan: <b>${rsv}</b><br>Level ${Math.floor((S.xp||0)/200)+1} &nbsp;|&nbsp; XP ${S.xp||0} &nbsp;|&nbsp; Runtun terbaik ${S.best||0}</p><button class="b" id="go">Mulai Simulasi Ujian (110 soal)</button><div class="mu" style="margin:18px 0 6px"><b>Latihan Cepat</b> per subtes: 10 soal, langsung dibahas setiap jawaban, tanpa timer.</div><div class="nv"><button class="b s" data-p="TWK">TWK</button><button class="b s" data-p="TIU">TIU</button><button class="b s" data-p="TKP">TKP</button></div><div class="ex" style="margin-top:16px"><b>Cakupan materi (mengacu pada kisi-kisi SKD):</b><br>TWK: Nasionalisme, Integritas, Bela Negara, Pilar Negara, Bahasa Indonesia.<br>TIU: verbal, numerik, figural.<br>TKP: pelayanan publik, jejaring kerja, sosial budaya, TIK, profesionalisme, anti radikalisme.</div><button class="b s" id="rs">Reset Progres</button></div>`;
+I('go').onclick=start;document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>prac(b.dataset.p));twice(I('rs'),()=>{try{localStorage.removeItem(K)}catch(x){}load();home()})}
+function build(){const out=[];
+for(const c of ['TWK','TIU','TKP']){let a=S.slots[c].map(id=>({id,...(typeof id=='number'?ALL[id]:gq(id))}));
+sh(a).forEach(q=>{q.o=sh([q.ok,...q.w]);out.push(q)})}
+return out}
+const upd=()=>{const t=I('tm');if(t){t.textContent=String(Math.floor(T/60)).padStart(2,'0')+':'+String(T%60).padStart(2,'0');t.className=T<300?'warn':''}};
+function start(){Q=build();A=[];i=0;T=MIN*60;clearInterval(tid);tid=setInterval(()=>{T--;upd();if(T<=0)finish()},1000);show()}
+function show(keep){const q=Q[i],y=scrollY;
+$.innerHTML=`<div class="top"><b id="tm"></b><span class="mu">${A.filter(Boolean).length}/${Q.length} terjawab</span></div><div class="c"><span class="tag ${q.cat}">${q.cat}</span><span class="mu">Soal ${i+1} / ${Q.length}</span><h2 style="margin-top:10px">${e(q.q)}</h2>${q.fig||''}${q.o.map((o,k)=>`<button class="o ${A[i]===o?'sel':''}" data-k="${k}">${'ABCD'[k]}. ${e(o)}</button>`).join('')}<div class="nv"><button class="b s" id="pv" ${i?'':'disabled'}>Sebelumnya</button><button class="b" id="nx" ${i<Q.length-1?'':'disabled'}>Berikutnya</button></div></div><div class="c"><div class="gr">${Q.map((x,k)=>`<button class="g ${A[k]?'a':''} ${k==i?'cur':''}" data-j="${k}">${k+1}</button>`).join('')}</div><button class="b s" id="fn">Akhiri Ujian</button></div>`;
+document.querySelectorAll('.o').forEach(b=>b.onclick=()=>{A[i]=q.o[+b.dataset.k];show(1)});
+document.querySelectorAll('.g').forEach(b=>b.onclick=()=>{i=+b.dataset.j;show()});
+I('pv').onclick=()=>{i--;show()};I('nx').onclick=()=>{i++;show()};
+twice(I('fn'),finish);upd();scrollTo(0,keep?y:0)}
+function finish(){clearInterval(tid);const sc={TWK:0,TIU:0,TKP:0};let sw=0;
+Q.forEach((q,k)=>{const p=pts(q,A[k]);sc[q.cat]+=p;if(p==5&&q.id!=null)S.c[q.id]=(S.c[q.id]||0)+1});
+for(const c in S.slots)S.slots[c]=S.slots[c].map(id=>{if((S.c[id]||0)>=2&&S.res[c].length){sw++;return S.res[c].shift()}return id});
+S.n++;save();
+const tot=sc.TWK+sc.TIU+sc.TKP,lulus=Object.keys(PG).every(c=>sc[c]>=PG[c]),used=Math.max(0,MIN*60-T);
+const it=(q,k)=>{const p=pts(q,A[k]),t=p==5;return`<div class="c r ${t?'ok':''}" data-c="${q.cat}" data-t="${t?1:0}"><span class="tag ${q.cat}">${q.cat}</span><b>${t?'Benar':q.cat=='TKP'&&A[k]?'Poin '+p:'Salah'}</b> <span class="mu">Soal ${k+1}</span><p style="margin:8px 0">${e(q.q)}</p>${q.fig||''}<div class="ans ${t?'g':'x'}">Jawaban Anda: ${A[k]?e(A[k]):'(tidak dijawab)'}${q.cat=='TKP'?' ('+p+' poin)':''}</div>${t?'':`<div class="ans g">Jawaban terbaik: ${e(q.ok)}</div>`}${q.cat=='TKP'?`<div class="ex"><b>Nilai tiap pilihan:</b>${[q.ok,...q.w].map((o,j)=>`<div>[${PT[j]}] ${e(o)}</div>`).join('')}</div>`:''}<div class="ex"><b>Penjelasan:</b> ${e(q.ex)}</div></div>`};
+$.innerHTML=`<div class="c" style="text-align:center"><div class="mu">Skor SKD</div><div class="big">${tot}</div><div class="mu">dari 550</div><p><span class="bd ${lulus?'y':'n'}">${lulus?'Memenuhi ambang batas':'Belum memenuhi ambang batas'}</span></p><div style="text-align:left">${Object.keys(PG).map(c=>{const ok=sc[c]>=PG[c];return`<div class="rw"><b>${c}</b> <span class="mu">${sc[c]} / ${MX[c]} (minimal ${PG[c]})</span><div class="bar" style="margin:4px 0 0"><i style="width:${sc[c]/MX[c]*100}%;background:${ok?'#12a574':'#e0503d'}"></i></div></div>`}).join('')}</div><p class="mu">Waktu terpakai ${Math.round(used/60)} menit.${sw?' '+sw+' soal sudah dikuasai (benar 2x) dan diganti soal cadangan.':''}</p><button class="b" id="ag">Ujian Lagi (diacak)</button><button class="b s" id="hm">Beranda</button></div><h2>Pembahasan</h2><div class="chips">${['ALL','SALAH','TWK','TIU','TKP'].map(f=>`<button class="ch" data-f="${f}">${f=='ALL'?'Semua':f=='SALAH'?'Belum 5 poin':f}</button>`).join('')}</div>`+Q.map(it).join('');
+document.querySelectorAll('.ch').forEach(b=>b.onclick=()=>{const f=b.dataset.f;document.querySelectorAll('.r').forEach(d=>d.style.display=(f=='ALL'||(f=='SALAH'&&d.dataset.t=='0')||d.dataset.c==f)?'':'none')});
+I('ag').onclick=start;I('hm').onclick=home;scrollTo(0,0)}
+let ST=0,BS=0,XP=0;
+function mast(){let sw=0;Q.forEach((q,k)=>{if(q.id!=null&&pts(q,A[k])==5)S.c[q.id]=(S.c[q.id]||0)+1});for(const c in S.slots)S.slots[c]=S.slots[c].map(id=>{if((S.c[id]||0)>=2&&S.res[c].length){sw++;return S.res[c].shift()}return id});return sw}
+function prac(c){clearInterval(tid);Q=sh(S.slots[c]).slice(0,10).map(id=>{const q={id,...(typeof id=='number'?ALL[id]:gq(id))};q.o=sh([q.ok,...q.w]);return q});A=[];i=0;ST=0;BS=0;XP=0;pshow()}
+function pshow(){const q=Q[i],a=A[i],d=a!=null;
+$.innerHTML=`<div class="top"><b>${i+1} / ${Q.length}</b><span class="mu">Runtun benar: <b>${ST}</b> &nbsp;|&nbsp; XP: <b>${XP}</b></span></div><div class="c"><span class="tag ${q.cat}">${q.cat}</span><span class="mu">Latihan Cepat</span><h2 style="margin-top:10px">${e(q.q)}</h2>${q.fig||''}${q.o.map((o,k)=>`<button class="o ${d?(o===q.ok?'ok':o===a?'no':''):''}" data-k="${k}" ${d?'disabled':''}>${'ABCD'[k]}. ${e(o)}</button>`).join('')}${d?`<div class="ex"><b>${pts(q,a)==5?'Tepat.':'Pembahasan:'}</b> ${q.cat=='TKP'?'Poin Anda '+pts(q,a)+' dari 5. ':''}${e(q.ex)}</div><button class="b" id="pn" style="margin-top:12px">${i<Q.length-1?'Soal Berikutnya':'Lihat Hasil'}</button>`:''}</div>`;
+document.querySelectorAll('.o').forEach(b=>b.onclick=()=>{A[i]=q.o[+b.dataset.k];const p=pts(q,A[i]);if(p==5){ST++;BS=Math.max(BS,ST);XP+=10}else{ST=0;if(q.cat=='TKP')XP+=p*2}pshow()});
+if(d)I('pn').onclick=()=>{if(i<Q.length-1){i++;pshow()}else pfin()};scrollTo(0,0)}
+function pfin(){const b=Q.filter((q,k)=>pts(q,A[k])==5).length,sw=mast(),pc=b/Q.length*100,c=Q[0].cat;S.xp=(S.xp||0)+XP;S.best=Math.max(S.best||0,BS);save();
+$.innerHTML=`<div class="c" style="text-align:center"><div class="mu">Hasil Latihan ${c}</div><div class="big">${b}<span style="font-size:1.4rem"> / ${Q.length}</span></div><p>${pc>=80?'Sangat baik. Pertahankan.':pc>=60?'Cukup baik. Pelajari lagi pembahasan soal yang belum tepat.':'Perlu penguatan. Ulangi latihan setelah membaca pembahasan.'}</p><p class="mu">XP didapat: <b>${XP}</b> | Runtun terbaik: <b>${BS}</b>${sw?' | '+sw+' soal dikuasai dan diganti':''}</p><button class="b" id="pa">Latihan Lagi</button><button class="b s" id="ph">Beranda</button></div>`;
+I('pa').onclick=()=>prac(c);I('ph').onclick=home;scrollTo(0,0)}
+load();home();
+</script></body></html>
